@@ -6167,7 +6167,7 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.1"
 
-"winchan@github:auth0/winchan#v0.1.2":
+winchan@auth0/winchan#v0.1.2:
   version "0.1.2"
   resolved "https://codeload.github.com/auth0/winchan/tar.gz/d96ec07cb3b7cfed4005b2970f8aa57e90c5bbca"
 
