@@ -7,6 +7,7 @@ import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
 
 import Login from './components/Login';
 import Index from './components/Index';
+import New from './components/New';
 import AuthService from './utils/AuthService';
 
 const auth = new AuthService(config.auth0_token, config.auth0_namespace);
@@ -48,6 +49,7 @@ ReactDOM.render(
     <Route path="/" component={App} auth={auth}>
       <IndexRedirect to="/home" />
       <Route path="home" component={Index} onEnter={requireAuth} />
+      <Route path="new" component={New} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="access_token=:access_token" component={Login} />
     </Route>
