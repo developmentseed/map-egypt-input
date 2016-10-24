@@ -48,3 +48,15 @@ legend {
   border-bottom: 1px solid #e5e5e5;
   margin-bottom: 20px;
 }
+
+.alt-date {
+  select {
+    float: left;
+    width: 20%;
+    margin-right: 5px;
+  }
+
+  .btn-now {
+    display: none;
+  }
+}

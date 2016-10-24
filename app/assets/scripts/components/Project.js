@@ -41,7 +41,7 @@ class Project extends React.Component {
               { rows }
             </tbody>
           </table>
-          <Link className="btn btn-info" to={`/projects/${component.state.id}/edit`}>Edit</Link>
+          <Link className="btn btn-outline-primary" to={`/projects/${component.state.id}/edit`}>Edit</Link>
         </div>
       );
     } else {

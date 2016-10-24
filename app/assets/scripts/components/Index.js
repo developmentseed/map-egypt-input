@@ -44,12 +44,12 @@ class Index extends React.Component {
           {listItems}
         </ul>
         <br />
-        <Link to="projects/new" className="btn btn-info">Add data</Link>
+        <Link to="projects/new" className="btn btn-outline-primary">Add data</Link>
         <br />
         <br />
         {
           (component.props.auth.loggedIn()
-            ? <button className="btn btn-info" onClick={this.logout}>Logout</button>
+            ? <button className="btn btn-outline-primary" onClick={this.logout}>Logout</button>
             : <div></div>
           )
         }

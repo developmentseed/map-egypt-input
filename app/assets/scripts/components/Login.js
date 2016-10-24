@@ -9,7 +9,7 @@ class Login extends React.Component {
       <div className="login">
         {auth.loggedIn()?"You are logged in!": "You are not logged in"}
         <br />
-        <button className="btn btn-info" onClick={auth.login.bind(this)}>Login</button>
+        <button className="btn btn-outline-primary" onClick={auth.login.bind(this)}>Login</button>
       </div>
     )
   }
