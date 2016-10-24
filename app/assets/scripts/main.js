@@ -3,11 +3,13 @@ var config = require('./config');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
+import {Router, Route, IndexRedirect, hashHistory, withRouter} from 'react-router';
 
 import Login from './components/Login';
 import Index from './components/Index';
 import New from './components/New';
+import Project from './components/Project';
+import Edit from './components/Edit';
 import AuthService from './utils/AuthService';
 
 const auth = new AuthService(config.auth0_token, config.auth0_namespace);
@@ -47,9 +49,11 @@ class App extends React.Component {
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App} auth={auth}>
-      <IndexRedirect to="/home" />
-      <Route path="home" component={Index} onEnter={requireAuth} />
-      <Route path="new" component={New} onEnter={requireAuth} />
+      <IndexRedirect to="/projects" />
+      <Route path="projects" component={Index} onEnter={requireAuth} />
+      <Route path="projects/new" component={withRouter(New)} onEnter={requireAuth} />
+      <Route path="projects/:id" component={Project} />
+      <Route path="projects/:id/edit" component={withRouter(Edit)} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="access_token=:access_token" component={Login} />
     </Route>

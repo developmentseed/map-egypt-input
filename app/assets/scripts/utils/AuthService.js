@@ -1,6 +1,8 @@
 import Auth0Lock from 'auth0-lock';
 import { browserHistory } from 'react-router'
 
+import reqwest from 'reqwest';
+
 export default class AuthService {
   constructor (clientId, domain) {
     this.lock = new Auth0Lock(clientId, domain, {});
@@ -11,7 +13,24 @@ export default class AuthService {
 
   _doAuthentication(authResult) {
     this.setToken(authResult.idToken);
-    browserHistory.replace('/#/home');
+    browserHistory.replace('/#/projects');
+  }
+
+  request (url, method, options) {
+    let headers = {};
+    if (this.loggedIn()) {
+      headers['Authorization'] = this.getToken();
+    }
+
+    let req_params = Object.assign({}, {
+      url, 
+      method, 
+      headers,
+      type: 'json',
+      contentType: 'application/json'
+    }, options || {});
+
+    return reqwest(req_params);
   }
 
   login() {
