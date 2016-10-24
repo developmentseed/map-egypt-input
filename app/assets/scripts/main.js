@@ -50,7 +50,7 @@ ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App} auth={auth}>
       <IndexRedirect to="/projects" />
-      <Route path="projects" component={Index} onEnter={requireAuth} />
+      <Route path="projects" component={Index} />
       <Route path="projects/new" component={withRouter(New)} onEnter={requireAuth} />
       <Route path="projects/:id" component={Project} />
       <Route path="projects/:id/edit" component={withRouter(Edit)} onEnter={requireAuth} />
