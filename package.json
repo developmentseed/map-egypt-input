@@ -77,6 +77,7 @@
   "dependencies": {
     "auth0-lock": "^10.4.0",
     "date-input-polyfill": "^2.11.5",
+    "jwt-decode": "^2.1.0",
     "lodash.defaultsdeep": "^4.3.5",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",

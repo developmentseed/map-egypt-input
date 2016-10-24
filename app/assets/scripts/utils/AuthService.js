@@ -1,5 +1,6 @@
 import Auth0Lock from 'auth0-lock';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
+import { isTokenExpired } from './jwtHelper';
 
 import reqwest from 'reqwest';
 
@@ -38,7 +39,8 @@ export default class AuthService {
   }
 
   loggedIn() {
-    return !!this.getToken(); 
+    const token = this.getToken();
+    return !!token && !isTokenExpired(token); 
   }
 
   setToken(idToken) {
