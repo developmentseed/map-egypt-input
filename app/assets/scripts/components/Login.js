@@ -7,8 +7,9 @@ class Login extends React.Component {
     let auth = component.props.auth;
     return (
       <div className="login">
-        {auth.loggedIn()?"You are logged in!": "You are not logged in."}
-        <button onClick={auth.login.bind(this)}>Login</button>
+        {auth.loggedIn()?"You are logged in!": "You are not logged in"}
+        <br />
+        <button className="btn btn-info" onClick={auth.login.bind(this)}>Login</button>
       </div>
     )
   }

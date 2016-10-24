@@ -3,7 +3,7 @@ var config = require('./config');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, IndexRedirect, hashHistory, withRouter} from 'react-router';
+import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
 
 import Login from './components/Login';
 import Index from './components/Index';
@@ -51,9 +51,9 @@ ReactDOM.render(
     <Route path="/" component={App} auth={auth}>
       <IndexRedirect to="/projects" />
       <Route path="projects" component={Index} />
-      <Route path="projects/new" component={withRouter(New)} onEnter={requireAuth} />
+      <Route path="projects/new" component={New} onEnter={requireAuth} />
       <Route path="projects/:id" component={Project} />
-      <Route path="projects/:id/edit" component={withRouter(Edit)} onEnter={requireAuth} />
+      <Route path="projects/:id/edit" component={Edit} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="access_token=:access_token" component={Login} />
     </Route>

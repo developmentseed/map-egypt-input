@@ -1,12 +1,15 @@
 /* Add a new Dataset */
-import React from 'react';
+import React, {PropTypes as T} from 'react';
 import ProjectForm from './ProjectForm';
-import { browserHistory } from 'react-router'
 
 let config = require('../config');
 let api_root = config.api_root;
 
 class New extends React.Component {
+  static contextTypes = {
+    router: T.object
+  }
+
   constructor (props) {
     super(props)
 
@@ -19,7 +22,7 @@ class New extends React.Component {
       data: JSON.stringify(formData)
     }).then(function (resp) {
       if (resp.id) {
-        component.props.router.push(`/projects/${resp.id}`);
+        component.context.router.push(`/projects/${resp.id}`);
       }
     }).fail(function (err, msg) {
       console.error('error', err, msg);

@@ -19,5 +19,5 @@ export function isTokenExpired (token) {
     return false;
   }
 
-  return !(date.valueOf() > (newDate().valueOf() + (offsetSeconds * 1000)));
+  return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
 }

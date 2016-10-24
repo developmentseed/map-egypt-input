@@ -30,6 +30,9 @@
           "presets": [
             "es2015",
             "react"
+          ],
+          "plugins": [
+            "transform-class-properties"
           ]
         }
       ],
@@ -76,6 +79,7 @@
   },
   "dependencies": {
     "auth0-lock": "^10.4.0",
+    "babel-plugin-transform-class-properties": "^6.16.0",
     "date-input-polyfill": "^2.11.5",
     "jwt-decode": "^2.1.0",
     "lodash.defaultsdeep": "^4.3.5",

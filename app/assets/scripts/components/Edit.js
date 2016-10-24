@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes as T} from 'react';
 import ProjectForm from './ProjectForm';
 import { browserHistory } from 'react-router'
 
@@ -6,6 +6,10 @@ const config = require('../config');
 const api_root = config.api_root;
 
 class Edit extends React.Component {
+  static contextTypes = {
+    router: T.object
+  }
+
   constructor (props) {
     super (props);
 
@@ -37,7 +41,7 @@ class Edit extends React.Component {
       data: JSON.stringify(formData)
     }).then(function (resp) {
       if (resp.id) {
-        component.props.router.push(`/projects/${resp.id}`)
+        component.context.router.push(`/projects/${resp.id}`)
       }
     }).fail(function (err, msg) {
       console.error('error', err, msg);
@@ -48,7 +52,7 @@ class Edit extends React.Component {
     const component = this;
     return component.props.auth.request(`${api_root}/projects/${component.state.id}`, 'delete')
       .then(function (resp) {
-        component.props.router.push(`/projects`)
+        component.context.router.push(`/projects`)
       }).fail(function (err, msg) {
         console.error('error', err, msg);
       });
