@@ -25,7 +25,7 @@ class Project extends React.Component {
     if (component.state && component.state.project) {
       const project = component.state.project.data;
       const rows = Object.keys(project).map(function (key) {
-        return <tr key={key}><td>{key}</td><td>{ project[key] }</td></tr>;
+        return <tr key={key}><td>{key}</td><td>{ JSON.stringify(project[key]) }</td></tr>;
       });
 
       return (
