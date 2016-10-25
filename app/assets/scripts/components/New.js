@@ -3,7 +3,7 @@ import React, {PropTypes as T} from 'react';
 import ProjectForm from './ProjectForm';
 
 let config = require('../config');
-let api_root = config.api_root;
+let apiRoot = config.api_root;
 
 class New extends React.Component {
   static contextTypes = {
@@ -11,14 +11,14 @@ class New extends React.Component {
   }
 
   constructor (props) {
-    super(props)
+    super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit ({formData}) {
     const component = this;
-    return this.props.auth.request(`${api_root}/projects`, 'post', {
+    return this.props.auth.request(`${apiRoot}/projects`, 'post', {
       data: JSON.stringify(formData)
     }).then(function (resp) {
       if (resp.id) {
@@ -31,7 +31,7 @@ class New extends React.Component {
 
   render () {
     const component = this;
-    return <ProjectForm onSubmit={component.handleSubmit} />
+    return <ProjectForm onSubmit={component.handleSubmit} />;
   }
 }
 

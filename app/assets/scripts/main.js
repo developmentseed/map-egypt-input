@@ -16,33 +16,28 @@ const auth = new AuthService(config.auth0_token, config.auth0_namespace);
 
 const requireAuth = (nextState, replace) => {
   if (!auth.loggedIn()) {
-    replace({ pathname: '/login' })
+    replace({ pathname: '/login' });
   }
-}
+};
 
 class App extends React.Component {
-  constructor (props) {
-    super (props);
-  }
-
   componentWillMount () {
     this.setState({
       auth: auth
-    })
-
+    });
   }
 
   render () {
     const component = this;
     let children = null;
-    if (this.props.children) {
-      children = React.cloneElement(this.props.children, {
-        auth: this.props.route.auth
-      })
+    if (component.props.children) {
+      children = React.cloneElement(component.props.children, {
+        auth: component.props.route.auth
+      });
     }
     return (
       <div>{children}</div>
-    )
+    );
   }
 }
 

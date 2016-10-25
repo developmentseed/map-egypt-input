@@ -1,8 +1,8 @@
 import React, {PropTypes as T} from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 const config = require('../config');
-const api_root = config.api_root;
+const apiRoot = config.api_root;
 
 class Index extends React.Component {
   static contextTypes = {
@@ -16,7 +16,7 @@ class Index extends React.Component {
 
   componentWillMount () {
     const component = this;
-    component.props.auth.request(`${api_root}/projects`, 'get')
+    component.props.auth.request(`${apiRoot}/projects`, 'get')
       .then(function (resp) {
         component.setState({
           list: resp
@@ -29,7 +29,7 @@ class Index extends React.Component {
     component.props.auth.logout();
     component.context.router.push('/projects');
   }
-  
+
   render () {
     const component = this;
     if (!component.state) {

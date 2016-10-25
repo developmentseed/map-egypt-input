@@ -1,9 +1,8 @@
 import React, {PropTypes as T} from 'react';
 import ProjectForm from './ProjectForm';
-import { browserHistory } from 'react-router'
 
 const config = require('../config');
-const api_root = config.api_root;
+const apiRoot = config.api_root;
 
 class Edit extends React.Component {
   static contextTypes = {
@@ -11,7 +10,7 @@ class Edit extends React.Component {
   }
 
   constructor (props) {
-    super (props);
+    super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -20,16 +19,16 @@ class Edit extends React.Component {
   componentWillMount () {
     const component = this;
     const id = component.props.location.pathname
-      .replace('/projects/','')
+      .replace('/projects/', '')
       .replace('/edit', '')
     ;
 
-    component.props.auth.request(`${api_root}/projects/${id}`, 'get')
+    component.props.auth.request(`${apiRoot}/projects/${id}`, 'get')
       .then(function (resp) {
         component.setState({
           project: resp,
           id: id
-        })
+        });
       }).fail(function (err, msg) {
         console.error('error', err, msg);
       });
@@ -37,22 +36,22 @@ class Edit extends React.Component {
 
   handleSubmit ({formData}) {
     const component = this;
-    return component.props.auth.request(`${api_root}/projects/${component.state.id}`, 'put', {
+    return component.props.auth.request(`${apiRoot}/projects/${component.state.id}`, 'put', {
       data: JSON.stringify(formData)
     }).then(function (resp) {
       if (resp.id) {
-        component.context.router.push(`/projects/${resp.id}`)
+        component.context.router.push(`/projects/${resp.id}`);
       }
     }).fail(function (err, msg) {
       console.error('error', err, msg);
     });
   }
 
-  handleDelete() {
+  handleDelete () {
     const component = this;
-    return component.props.auth.request(`${api_root}/projects/${component.state.id}`, 'delete')
+    return component.props.auth.request(`${apiRoot}/projects/${component.state.id}`, 'delete')
       .then(function (resp) {
-        component.context.router.push(`/projects`)
+        component.context.router.push('/projects');
       }).fail(function (err, msg) {
         console.error('error', err, msg);
       });
@@ -65,7 +64,7 @@ class Edit extends React.Component {
         <ProjectForm onSubmit={component.handleSubmit} formData={component.state.project.data}/>
         <br />
         <button className="btn btn-danger" onClick={component.handleDelete}>Delete</button>
-      </div>
+      </div>;
     }
     return <div></div>;
   }

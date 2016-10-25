@@ -1,20 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 
 const config = require('../config');
-const api_root = config.api_root;
+const apiRoot = config.api_root;
 
 class Project extends React.Component {
   componentWillMount () {
     const component = this;
-    const id = component.props.location.pathname.replace('/projects/','');
+    const id = component.props.location.pathname.replace('/projects/', '');
 
-    component.props.auth.request(`${api_root}/projects/${id}`, 'get')
+    component.props.auth.request(`${apiRoot}/projects/${id}`, 'get')
       .then(function (resp) {
         component.setState({
           project: resp,
           id: id
-        })
+        });
       }).fail(function (err, msg) {
         console.error('error', err, msg);
       });

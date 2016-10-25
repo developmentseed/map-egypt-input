@@ -7,12 +7,12 @@ import reqwest from 'reqwest';
 export default class AuthService {
   constructor (clientId, domain) {
     this.lock = new Auth0Lock(clientId, domain, {});
-    this.lock.on('authenticated', this._doAuthentication.bind(this))
+    this.lock.on('authenticated', this._doAuthentication.bind(this));
 
-    this.login = this.login.bind(this) 
+    this.login = this.login.bind(this);
   }
 
-  _doAuthentication(authResult) {
+  _doAuthentication (authResult) {
     this.setToken(authResult.idToken);
     browserHistory.replace('/#/projects');
   }
@@ -23,36 +23,36 @@ export default class AuthService {
       headers['Authorization'] = this.getToken();
     }
 
-    let req_params = Object.assign({}, {
-      url, 
-      method, 
+    let reqParams = Object.assign({}, {
+      url,
+      method,
       headers,
       type: 'json',
       contentType: 'application/json'
     }, options || {});
 
-    return reqwest(req_params);
+    return reqwest(reqParams);
   }
 
-  login() {
-    this.lock.show(); 
+  login () {
+    this.lock.show();
   }
 
-  loggedIn() {
+  loggedIn () {
     const token = this.getToken();
-    return !!token && !isTokenExpired(token); 
+    return !!token && !isTokenExpired(token);
   }
 
-  setToken(idToken) {
+  setToken (idToken) {
     // Set auth token in local storage
-    localStorage.setItem('id_token', idToken) 
+    localStorage.setItem('id_token', idToken);
   }
 
-  getToken(idToken) {
+  getToken (idToken) {
     return localStorage.getItem('id_token');
   }
 
-  logout() {
+  logout () {
     // Clear the session storage
     localStorage.removeItem('id_token');
   }
