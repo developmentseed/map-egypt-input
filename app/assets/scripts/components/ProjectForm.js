@@ -1,6 +1,5 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
-import 'date-input-polyfill';
 
 const schema = {
   title: 'Project Form',
@@ -9,6 +8,10 @@ const schema = {
     name: {type: 'string', title: 'Project Name'},
     description: {
       title: 'Description',
+      type: 'string'
+    },
+    project_delays: {
+      title: 'Project Delays',
       type: 'string'
     },
     status: {type: 'string', title: 'Project Status', enum: ['Ongoing', 'Closed']},
@@ -20,7 +23,8 @@ const schema = {
     number_served_unit: {type: 'string', title: 'Number Served Unit'},
     responsible_party: {type: 'string', title: 'Responsible Party'},
     responsible_ministry: {type: 'string', title: 'Responsible Ministry'},
-    project_link: {type: 'string', format: 'uri'},
+    project_link: {title: 'Project Link', type: 'string', format: 'uri'},
+    percent_complete: {title: 'Percent Complete', type: 'integer', minimum: 0, multipleOf: 5, maximum: 100, default: 0},
     sds_indicator: {
       title: 'SDS Indicators',
       type: 'array',
@@ -49,7 +53,15 @@ const schema = {
       type: 'array',
       title: 'Category',
       items: {
-        type: 'string'
+        type: 'string',
+        enum: [
+          'Agriculture Extension & Research',
+          'Agro-industry, Marketing & Trade',
+          'Crops',
+          'Fishing, Aquaculture & Trade',
+          'Livestock',
+          'Rural Infrastructure & Irrigation'
+        ]
       }
     },
     location: {
@@ -86,9 +98,9 @@ const schema = {
       items: {
         type: 'object',
         properties: {
-          budget: {
+          amount: {
             type: 'number',
-            title: 'Budget'
+            title: 'Amount'
           },
           donor_name: {
             type: 'string',
@@ -98,7 +110,13 @@ const schema = {
             type: 'string',
             title: 'Type of Fund',
             enum: ['Loan', 'Grant']
+          },
+          date: {
+            type: 'string',
+            title: 'Disbursement Date',
+            format: 'date'
           }
+
         }
       }
     },
@@ -120,6 +138,10 @@ const schema = {
           description: {
             type: 'string',
             title: 'Implementation Description'
+          },
+          target: {
+            type: 'string',
+            title: 'Target'
           },
           kpi: {
             type: 'string',
@@ -143,11 +165,17 @@ const uiSchema = {
   description: {
     'ui:widget': 'textarea'
   },
+  project_delays: {
+    'ui:widget': 'textarea'
+  },
   number_served: {
     'ui:placeholder': 20000
   },
   number_served_unit: {
     'ui:placeholder': 'Households'
+  },
+  percent_complete: {
+    'ui:widget': 'range'
   },
   planned_start_date: {
     'ui:widget': 'alt-date',
@@ -169,6 +197,14 @@ const uiSchema = {
   },
   project_link: {
     'ui:placeholder': 'http://'
+  },
+  funds: {
+    items: {
+      date: {
+        'ui:widget': 'alt-date',
+        'classNames': 'alt-date'
+      }
+    }
   },
   kmi: {
     items: {
