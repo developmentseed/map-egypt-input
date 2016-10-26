@@ -60,3 +60,20 @@ legend {
     display: none;
   }
 }
+
+.project-display {
+  ul {
+    label {
+      font-weight: bold; 
+      margin-right: 10px;
+    }
+    label:after {
+      content: ": "
+    }
+
+    li {
+      margin: 10px;
+    }
+  }
+
+}

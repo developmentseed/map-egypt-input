@@ -1,5 +1,6 @@
 import React, {PropTypes as T} from 'react';
 import ProjectForm from './ProjectForm';
+import { Link } from 'react-router';
 
 const config = require('../config');
 const apiRoot = config.api_root;
@@ -59,11 +60,14 @@ class Edit extends React.Component {
 
   render () {
     const component = this;
-    if (this.state && this.state.project) {
+    if (component.state && component.state.project) {
       return <div>
         <ProjectForm onSubmit={component.handleSubmit} formData={component.state.project.data}/>
         <br />
         <button className="btn btn-danger" onClick={component.handleDelete}>Delete</button>
+        <br />
+        <br />
+        <Link className="btn btn-outline-danger" to={`/projects/${component.state.id}`}>Cancel</Link>
       </div>;
     }
     return <div></div>;

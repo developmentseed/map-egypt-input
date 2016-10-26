@@ -1,6 +1,7 @@
 /* Add a new Dataset */
 import React, {PropTypes as T} from 'react';
 import ProjectForm from './ProjectForm';
+import {Link} from 'react-router';
 
 let config = require('../config');
 let apiRoot = config.api_root;
@@ -31,7 +32,13 @@ class New extends React.Component {
 
   render () {
     const component = this;
-    return <ProjectForm onSubmit={component.handleSubmit} />;
+    return (
+      <div>
+       <ProjectForm onSubmit={component.handleSubmit} />
+       <br />
+       <Link className="btn btn-outline-danger" to="/">Cancel</Link>
+     </div>
+    );
   }
 }
 
