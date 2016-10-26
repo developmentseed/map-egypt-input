@@ -4,6 +4,7 @@ import Form from 'react-jsonschema-form';
 const schema = {
   title: 'Project Form',
   type: 'object',
+  required: ['name'],
   properties: {
     name: {type: 'string', title: 'Project Name'},
     description: {
