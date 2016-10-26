@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
 
-const schema = {
+export const schema = {
   title: 'Project Form',
   type: 'object',
   required: ['name'],
@@ -20,12 +20,18 @@ const schema = {
     actual_start_date: {type: 'string', title: 'Actual Start Date', format: 'date'},
     planned_end_date: {type: 'string', title: 'Planned End Date', format: 'date'},
     actual_end_date: {type: 'string', title: 'Actual End Date', format: 'date'},
-    number_served: {type: 'number', title: 'Number Served'},
-    number_served_unit: {type: 'string', title: 'Number Served Unit'},
     responsible_party: {type: 'string', title: 'Responsible Party'},
     responsible_ministry: {type: 'string', title: 'Responsible Ministry'},
     project_link: {title: 'Project Link', type: 'string', format: 'uri'},
     percent_complete: {title: 'Percent Complete', type: 'integer', minimum: 0, multipleOf: 5, maximum: 100, default: 0},
+    number_served: {
+      type: 'object',
+      title: 'Number Served',
+      properties: {
+        number_served: {type: 'number', title: 'Amount'},
+        number_served_unit: {type: 'string', title: 'Unit'}
+      }
+    },
     sds_indicator: {
       title: 'SDS Indicators',
       type: 'array',
@@ -70,6 +76,7 @@ const schema = {
       type: 'array',
       items: {
         type: 'object',
+        required: ['governorate', 'district'],
         properties: {
           governorate: {
             title: 'Governorate',
@@ -98,6 +105,7 @@ const schema = {
       type: 'array',
       items: {
         type: 'object',
+        required: ['amount', 'donor_name', 'type', 'date'],
         properties: {
           amount: {
             type: 'number',
@@ -126,6 +134,7 @@ const schema = {
       type: 'array',
       items: {
         type: 'object',
+        required: ['status', 'activity', 'description', 'target', 'kpi', 'date'],
         properties: {
           activity: {
             type: 'string',
@@ -170,10 +179,12 @@ const uiSchema = {
     'ui:widget': 'textarea'
   },
   number_served: {
-    'ui:placeholder': 20000
-  },
-  number_served_unit: {
-    'ui:placeholder': 'Households'
+    number_served: {
+      'ui:placeholder': '20000'
+    },
+    number_served_unit: {
+      'ui:placeholder': 'Households'
+    }
   },
   percent_complete: {
     'ui:widget': 'range'
