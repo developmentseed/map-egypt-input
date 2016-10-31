@@ -8,64 +8,63 @@ export const schema = {
   properties: {
     name: {type: 'string', title: 'Project Name'},
     description: {
-      title: 'Description',
+      title: 'Objective',
       type: 'string'
     },
     project_delays: {
       title: 'Project Delays',
       type: 'string'
     },
-    status: {type: 'string', title: 'Project Status', enum: ['Ongoing', 'Closed']},
+    status: {type: 'string', title: 'Project Status', enum: ['Planned', 'Ongoing', 'Closed']},
     planned_start_date: {type: 'string', title: 'Planned Start Date', format: 'date'},
     actual_start_date: {type: 'string', title: 'Actual Start Date', format: 'date'},
     planned_end_date: {type: 'string', title: 'Planned End Date', format: 'date'},
     actual_end_date: {type: 'string', title: 'Actual End Date', format: 'date'},
-    responsible_party: {type: 'string', title: 'Responsible Party'},
-    responsible_ministry: {type: 'string', title: 'Responsible Ministry'},
+    local_manager: {type: 'string', title: 'Local Project Manager'},
+    responsible_ministry: {type: 'string', title: 'Responsible Ministry', enum: ['Ministry 1', 'Ministry 2', 'Ministry 3']},
     project_link: {title: 'Project Link', type: 'string', format: 'uri'},
-    percent_complete: {title: 'Percent Complete', type: 'integer', minimum: 0, multipleOf: 5, maximum: 100, default: 0},
     number_served: {
       type: 'object',
-      title: 'Number Served',
+      title: 'Number of Beneficiaries',
       properties: {
         number_served: {type: 'number', title: 'Amount'},
         number_served_unit: {type: 'string', title: 'Unit'}
       }
     },
     sds_indicator: {
-      title: 'SDS Indicators',
+      title: 'SDS Goals',
       type: 'array',
       items: {
         type: 'string',
         enum: [
-          'SDS Indicator 1',
-          'SDS Indicator 2',
-          'SDS Indicator 3'
+          'SDS Goal 1',
+          'SDS Goal 2',
+          'SDS Goal 3'
         ]
       }
     },
     sdg_indicator: {
-      title: 'SDG Indicators',
+      title: 'SDG Goals',
       type: 'array',
       items: {
         type: 'string',
         enum: [
-          'SDG Indicator 1',
-          'SDG Indicator 2',
-          'SDG Indicator 3'
+          'SDG Goal 1',
+          'SDG Goal 2',
+          'SDG Goal 3'
         ]
       }
     },
     category: {
       type: 'array',
-      title: 'Category',
+      title: 'Sub-sectors',
       items: {
         type: 'string',
         enum: [
           'Agriculture Extension & Research',
           'Agro-industry, Marketing & Trade',
           'Crops',
-          'Fishing, Aquaculture & Trade',
+          'Fishing, Aquaculture & Forestry',
           'Livestock',
           'Rural Infrastructure & Irrigation'
         ]
