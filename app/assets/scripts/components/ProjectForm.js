@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
+import {cloneDeep} from 'lodash'
 
 export const schema = {
   title: 'Project Form',
@@ -10,6 +11,13 @@ export const schema = {
     description: {
       title: 'Objective',
       type: 'string'
+    },
+    components: {
+      title: 'Components',
+      type: 'array',
+      items: {
+        type: 'string'
+      }
     },
     amendments: {
       title: 'Project Amendments',
@@ -139,9 +147,10 @@ export const schema = {
         type: 'object',
         required: ['status', 'activity', 'description', 'target', 'kpi', 'date'],
         properties: {
-          activity: {
+          component: {
             type: 'string',
-            title: 'Activity'
+            title: 'Component',
+            enum: []
           },
           status: {
             type: 'string',
@@ -171,81 +180,101 @@ export const schema = {
   }
 };
 
-const uiSchema = {
-  name: {
-    'ui:placeholder': 'Unique name'
-  },
-  description: {
-    'ui:widget': 'textarea'
-  },
-  amendments: {
-    'ui:widget': 'textarea'
-  },
-  project_delays: {
-    'ui:widget': 'textarea'
-  },
-  number_served: {
-    number_served: {
-      'ui:placeholder': '20000'
-    },
-    number_served_unit: {
-      'ui:placeholder': 'Households'
-    }
-  },
-  percent_complete: {
-    'ui:widget': 'range'
-  },
-  planned_start_date: {
-    'ui:widget': 'alt-date',
-    'classNames': 'alt-date'
-  },
-  actual_start_date: {
-    'ui:widget': 'alt-date',
-    'classNames': 'alt-date'
-  },
+class ProjectForm extends React.Component {
+  constructor (props) {
+    super(props);
 
-  planned_end_date: {
-    'ui:widget': 'alt-date',
-    'classNames': 'alt-date'
-  },
-
-  actual_end_date: {
-    'ui:widget': 'alt-date',
-    'classNames': 'alt-date'
-  },
-  project_link: {
-    'ui:placeholder': 'http://'
-  },
-  funds: {
-    items: {
-      date: {
-        'ui:widget': 'alt-date',
-        'classNames': 'alt-date'
-      }
-    }
-  },
-  kmi: {
-    items: {
-      date: {
-        'ui:widget': 'alt-date',
-        'classNames': 'alt-date'
+    this.state = {};
+    this.state.schema = schema;
+    this.state.formData = this.props.formData;
+    this.state.uiSchema = {
+      name: {
+        'ui:placeholder': 'Unique name'
       },
       description: {
         'ui:widget': 'textarea'
+      },
+      amendments: {
+        'ui:widget': 'textarea'
+      },
+      project_delays: {
+        'ui:widget': 'textarea'
+      },
+      number_served: {
+        number_served: {
+          'ui:placeholder': '20000'
+        },
+        number_served_unit: {
+          'ui:placeholder': 'Households'
+        }
+      },
+      percent_complete: {
+        'ui:widget': 'range'
+      },
+      planned_start_date: {
+        'ui:widget': 'alt-date',
+        'classNames': 'alt-date'
+      },
+      actual_start_date: {
+        'ui:widget': 'alt-date',
+        'classNames': 'alt-date'
+      },
+
+      planned_end_date: {
+        'ui:widget': 'alt-date',
+        'classNames': 'alt-date'
+      },
+
+      actual_end_date: {
+        'ui:widget': 'alt-date',
+        'classNames': 'alt-date'
+      },
+      project_link: {
+        'ui:placeholder': 'http://'
+      },
+      funds: {
+        items: {
+          date: {
+            'ui:widget': 'alt-date',
+            'classNames': 'alt-date'
+          }
+        }
+      },
+      kmi: {
+        items: {
+          date: {
+            'ui:widget': 'alt-date',
+            'classNames': 'alt-date'
+          },
+          description: {
+            'ui:widget': 'textarea'
+          },
+        }
+      }
+    };
+  }
+
+  onChange ({formData}) {
+    if (formData.components) {
+      const componentEnums = formData.components.filter((component) => {
+        return component && component.length > 0;
+      });
+      if (componentEnums.length > 0) {
+        let schema = cloneDeep(this.state.schema);
+        schema.properties.kmi.items.properties.component.enum = componentEnums;
+        this.setState({schema: schema, formData: formData});
       }
     }
   }
-};
 
-class ProjectForm extends React.Component {
   render () {
-    return <Form schema={schema}
+    return <Form schema={this.state.schema}
       onSubmit={this.props.onSubmit}
-      formData={this.props.formData}
-      uiSchema = {uiSchema}
+      formData={this.state.formData}
+      onChange = {this.onChange.bind(this)}
+      uiSchema = {this.state.uiSchema}
     />;
   }
-
 }
 
 export default ProjectForm;
