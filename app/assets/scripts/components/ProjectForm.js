@@ -11,6 +11,10 @@ export const schema = {
       title: 'Objective',
       type: 'string'
     },
+    amendments: {
+      title: 'Project Amendments',
+      type: 'string'
+    },
     project_delays: {
       title: 'Project Delays',
       type: 'string'
@@ -172,6 +176,9 @@ const uiSchema = {
     'ui:placeholder': 'Unique name'
   },
   description: {
+    'ui:widget': 'textarea'
+  },
+  amendments: {
     'ui:widget': 'textarea'
   },
   project_delays: {
