@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
-import {cloneDeep} from 'lodash'
+import {cloneDeep, range} from 'lodash';
 
 export const schema = {
   title: 'Project Form',
@@ -28,10 +28,10 @@ export const schema = {
       type: 'string'
     },
     status: {type: 'string', title: 'Project Status', enum: ['Planned', 'Ongoing', 'Closed']},
-    planned_start_date: {type: 'string', title: 'Planned Start Date', format: 'date'},
-    actual_start_date: {type: 'string', title: 'Actual Start Date', format: 'date'},
-    planned_end_date: {type: 'string', title: 'Planned End Date', format: 'date'},
-    actual_end_date: {type: 'string', title: 'Actual End Date', format: 'date'},
+    planned_start_date: {type: 'string', title: 'Planned Start Date'},
+    actual_start_date: {type: 'string', title: 'Actual Start Date'},
+    planned_end_date: {type: 'string', title: 'Planned End Date'},
+    actual_end_date: {type: 'string', title: 'Actual End Date'},
     local_manager: {type: 'string', title: 'Local Project Manager'},
     responsible_ministry: {type: 'string', title: 'Responsible Ministry', enum: ['Ministry 1', 'Ministry 2', 'Ministry 3']},
     project_link: {title: 'Project Link', type: 'string', format: 'uri'},
@@ -133,8 +133,7 @@ export const schema = {
           },
           date: {
             type: 'string',
-            title: 'Disbursement Date',
-            format: 'date'
+            title: 'Disbursement Date'
           }
 
         }
@@ -171,14 +170,68 @@ export const schema = {
           },
           date: {
             type: 'string',
-            title: 'Monitoring Date',
-            format: 'date'
+            title: 'Monitoring Date'
           }
         }
       }
     }
   }
 };
+
+  /**
+   * Date widget with month & year dropdowns
+   */
+class DateField extends React.Component {
+  constructor (props) {
+    super(props);
+    if (props.formData) {
+      const [year, month] = props.formData.split('/');
+      this.state = {month, year};
+    } else {
+      this.state = {month: -1, year: -1};
+    }
+  }
+
+  readyForChange () {
+    return this.state.month && this.state.year &&
+      this.state.month !== -1 && this.state.year !== -1;
+  }
+
+  onChange (name) {
+    return (event) => {
+      this.setState({[name]: event.target.value}, () => {
+        if (this.readyForChange()) {
+          this.props.onChange(this.state.year + '/' + this.state.month);
+        }
+      });
+    };
+  }
+
+  render () {
+    const {month, year} = this.state;
+    console.log(this.props.schema.title, Number(year), Number(month));
+    let months = range(1, 13).map((month) => {
+      return <option key={month} value={month}>{month}</option>;
+    });
+    months.unshift(<option key={-1} value={-1}>month</option>);
+
+    const years = range(1900, 2100).map((year) => {
+      return <option key={year} value={year}>{year}</option>;
+    });
+
+    years.unshift(<option key={-1} value={-1}>year</option>);
+
+    return <div>
+      <label className="control-label">{this.props.schema.title}</label>
+      <select className="form-control" value={Number(year)} onChange={this.onChange('year')}>
+        {years}
+      </select>
+      <select className="form-control" value={Number(month)} onChange={this.onChange('month')}>
+        {months}
+      </select>
+    </div>;
+  }
+}
 
 class ProjectForm extends React.Component {
   constructor (props) {
@@ -212,22 +265,16 @@ class ProjectForm extends React.Component {
         'ui:widget': 'range'
       },
       planned_start_date: {
-        'ui:widget': 'alt-date',
-        'classNames': 'alt-date'
+        'ui:field': 'short-date'
       },
       actual_start_date: {
-        'ui:widget': 'alt-date',
-        'classNames': 'alt-date'
+        'ui:field': 'short-date'
       },
-
       planned_end_date: {
-        'ui:widget': 'alt-date',
-        'classNames': 'alt-date'
+        'ui:field': 'short-date'
       },
-
       actual_end_date: {
-        'ui:widget': 'alt-date',
-        'classNames': 'alt-date'
+        'ui:field': 'short-date'
       },
       project_link: {
         'ui:placeholder': 'http://'
@@ -235,20 +282,18 @@ class ProjectForm extends React.Component {
       funds: {
         items: {
           date: {
-            'ui:widget': 'alt-date',
-            'classNames': 'alt-date'
+            'ui:field': 'short-date'
           }
         }
       },
       kmi: {
         items: {
           date: {
-            'ui:widget': 'alt-date',
-            'classNames': 'alt-date'
+            'ui:field': 'short-date'
           },
           description: {
             'ui:widget': 'textarea'
-          },
+          }
         }
       }
     };
@@ -272,6 +317,7 @@ class ProjectForm extends React.Component {
       onSubmit={this.props.onSubmit}
       formData={this.state.formData}
       onChange = {this.onChange.bind(this)}
+      fields={{'short-date': DateField}}
       uiSchema = {this.state.uiSchema}
     />;
   }
