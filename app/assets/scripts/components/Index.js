@@ -63,8 +63,8 @@ class Index extends React.Component {
           </div>
         </header>
         <div className="section">
-          <h1 className="header-page-main">Projects</h1>
-          <Link to='projects/new' className="btn button--primary button-section-header">Add a Project</Link>
+          <h2 className="header-page-main">Recently Added Projects</h2>
+          <Link to='projects/new' className="btn button--primary button-section-header button--small">Add a Project</Link>
           <table className="table">
             <thead>
               <tr>
@@ -77,30 +77,60 @@ class Index extends React.Component {
             <tbody>
               <tr>
                 <td>Ongoing</td>
-                <td><a href="">Name of Project</a> <a href="">Edit</a></td>
+                <td><a href="">Name of Project</a> <span className="table-edit"><a href="">Edit</a></span></td>
                 <td>Agriculture Extension, Research</td>
                 <td>Governorate 2, District 1, Governorate 1, District 1</td>
               </tr>
               <tr>
                 <td>Ongoing</td>
-                <td><a href="">Name of Project</a> <a href="">Edit</a></td>
+                <td><a href="">Name of Project</a> <span className="table-edit"><a href="">Edit</a></span></td>
                 <td>Agriculture Extension, Research</td>
                 <td>Governorate 2, District 1, Governorate 1, District 1</td>
               </tr>
               <tr>
                 <td>Ongoing</td>
-                <td><a href="">Name of Project</a> <a href="">Edit</a></td>
+                <td><a href="">Name of Project</a> <span className="table-edit"><a href="">Edit</a></span></td>
                 <td>Agriculture Extension, Research</td>
                 <td>Governorate 2, District 1, Governorate 1, District 1</td>
               </tr>
               <tr>
                 <td>Ongoing</td>
-                <td><a href="">Name of Project</a> <a href="">Edit</a></td>
+                <td><a href="">Name of Project</a> <span className="table-edit"><a href="">Edit</a></span></td>
                 <td>Agriculture Extension, Research</td>
                 <td>Governorate 2, District 1, Governorate 1, District 1</td>
               </tr>
             </tbody>
             {listItems}
+          </table>
+        </div>
+        <div className="section">
+          <h2 className="header-page-main">Recently Added Indicators</h2>
+          <Link to='projects/new' className="btn button--primary button-section-header button--small">Add an Indicator</Link>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Date Added</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Name of Indicator <span className="table-edit"><a href="">Edit</a></span></td>
+                <td>Jan. 20, 2016</td>
+              </tr>
+              <tr>
+                <td>Name of Indicator <span className="table-edit"><a href="">Edit</a></span></td>
+                <td>Jan. 20, 2016</td>
+              </tr>
+              <tr>
+                <td>Name of Indicator <span className="table-edit"><a href="">Edit</a></span></td>
+                <td>Jan. 20, 2016</td>
+              </tr>
+              <tr>
+                <td>Name of Indicator <span className="table-edit"><a href="">Edit</a></span></td>
+                <td>Jan. 20, 2016</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

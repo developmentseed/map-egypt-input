@@ -19,6 +19,24 @@
 
 // Scss starts here!
 
+a {
+  cursor: pointer;
+  color: $link-color;
+  transition: opacity 0.24s ease 0s;
+}
+
+a:visited {
+  color: $link-color;
+}
+
+a:hover {
+  opacity: 0.70;
+}
+
+a:active {
+  outline: 0;
+}
+
 .clearfix {
   &:before,
   &:after {
@@ -45,18 +63,16 @@
   }
 }
 
+.section {
+  margin-bottom: 4em;
+}
+
 #site-canvas {
   margin: 0 auto;
   max-width: 1000px;
   line-height: 1.6;
   font-size: 14px;
   font-family: $base-font-family;
-}
-
-fieldset {
-  border: 1px solid gray;
-  padding: 1em;
-
 }
 
 legend {
