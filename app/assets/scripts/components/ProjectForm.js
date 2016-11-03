@@ -2,7 +2,7 @@ import React from 'react';
 import Form from 'react-jsonschema-form';
 
 export const schema = {
-  title: 'Project Form',
+  title: 'Add a Project',
   type: 'object',
   required: ['name'],
   properties: {
