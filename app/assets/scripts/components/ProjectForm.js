@@ -3,6 +3,7 @@ import Form from 'react-jsonschema-form';
 import {cloneDeep} from 'lodash';
 import DateField from './widgets/DateWidget';
 import LocationField from './widgets/LocationWidget';
+import CurrencyField from './widgets/CurrencyWidget';
 
 export const schema = {
   title: 'Project Form',
@@ -121,16 +122,46 @@ export const schema = {
       }
 
     },
-    funds: {
-      title: 'Funds',
+    budget: {
+      title: 'Budget',
       type: 'array',
       items: {
         type: 'object',
-        required: ['amount', 'donor_name', 'type', 'date'],
+        required: ['fund', 'donor_name'],
         properties: {
-          amount: {
-            type: 'number',
-            title: 'Amount'
+          fund: {
+            type: 'object',
+            title: 'Fund',
+            properties: {
+              currency: {type: 'string'},
+              rate: {type: 'number'},
+              amount: {type: 'number'},
+              original: {type: 'number'}
+            }
+          },
+          donor_name: {
+            type: 'string',
+            title: 'Donor Name'
+          }
+        }
+      }
+    },
+    disbursed: {
+      title: 'Disbursed Funds',
+      type: 'array',
+      items: {
+        type: 'object',
+        required: ['fund', 'donor_name', 'type', 'date'],
+        properties: {
+          fund: {
+            type: 'object',
+            title: 'Fund',
+            properties: {
+              currenct: {type: 'string'},
+              rate: {type: 'number'},
+              amount: {type: 'number'},
+              original: {type: 'number'}
+            }
           },
           donor_name: {
             type: 'string',
@@ -142,10 +173,8 @@ export const schema = {
             enum: ['Loan', 'Grant']
           },
           date: {
-            type: 'string',
-            title: 'Disbursement Date'
+            type: 'string'
           }
-
         }
       }
     },
@@ -239,11 +268,15 @@ class ProjectForm extends React.Component {
           marker: {'ui:field': 'marker'}
         }
       },
-      funds: {
+      budget: {
         items: {
-          date: {
-            'ui:field': 'short-date'
-          }
+          fund: {'ui:field': 'currency'}
+        }
+      },
+      disbursed: {
+        items: {
+          fund: {'ui:field': 'currency'},
+          date: {'ui:field': 'short-date'}
         }
       },
       kmi: {
@@ -279,7 +312,8 @@ class ProjectForm extends React.Component {
       onChange = {this.onChange.bind(this)}
       fields={{
         'short-date': DateField,
-        'marker': LocationField
+        'marker': LocationField,
+        'currency': CurrencyField
       }}
       uiSchema = {this.state.uiSchema}
     />;
