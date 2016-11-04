@@ -35,22 +35,28 @@ export default class DateField extends React.Component {
     let months = range(1, 13).map((month) => {
       return <option key={month} value={month}>{month}</option>;
     });
-    months.unshift(<option key={-1} value={-1}>month</option>);
+    months.unshift(<option key={-1} value={-1}>Month</option>);
 
     const years = range(1900, 2100).map((year) => {
       return <option key={year} value={year}>{year}</option>;
     });
 
-    years.unshift(<option key={-1} value={-1}>year</option>);
+    years.unshift(<option key={-1} value={-1}>Year</option>);
 
     return <div>
-      <label className="control-label">{this.props.schema.title}</label>
-      <select className="form-control" value={Number(year)} onChange={this.onChange('year')}>
-        {years}
-      </select>
-      <select className="form-control" value={Number(month)} onChange={this.onChange('month')}>
-        {months}
-      </select>
+      <legend>{this.props.schema.title}</legend>
+      <div className="row">
+        <div className="col-sm-6">
+          <select className="form-control" value={Number(year)} onChange={this.onChange('year')}>
+            {years}
+          </select>
+        </div>
+        <div className="col-sm-6">
+          <select className="form-control" value={Number(month)} onChange={this.onChange('month')}>
+            {months}
+          </select>
+        </div>
+      </div>
     </div>;
   }
 }
