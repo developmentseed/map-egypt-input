@@ -1,6 +1,8 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
-import {cloneDeep, range} from 'lodash';
+import {cloneDeep} from 'lodash';
+import DateField from './widgets/DateWidget';
+import LocationField from './widgets/LocationWidget';
 
 export const schema = {
   title: 'Project Form',
@@ -87,7 +89,7 @@ export const schema = {
       type: 'array',
       items: {
         type: 'object',
-        required: ['governorate', 'district'],
+        required: ['governorate'],
         properties: {
           governorate: {
             title: 'Governorate',
@@ -106,6 +108,14 @@ export const schema = {
               'district 2',
               'district 3'
             ]
+          },
+          marker: {
+            title: 'Location Marker',
+            type: 'object',
+            properties: {
+              lon: {type: 'number'},
+              lat: {type: 'number'}
+            }
           }
         }
       }
@@ -178,61 +188,6 @@ export const schema = {
   }
 };
 
-  /**
-   * Date widget with month & year dropdowns
-   */
-class DateField extends React.Component {
-  constructor (props) {
-    super(props);
-    if (props.formData) {
-      const [year, month] = props.formData.split('/');
-      this.state = {month, year};
-    } else {
-      this.state = {month: -1, year: -1};
-    }
-  }
-
-  readyForChange () {
-    return this.state.month && this.state.year &&
-      this.state.month !== -1 && this.state.year !== -1;
-  }
-
-  onChange (name) {
-    return (event) => {
-      this.setState({[name]: event.target.value}, () => {
-        if (this.readyForChange()) {
-          this.props.onChange(this.state.year + '/' + this.state.month);
-        }
-      });
-    };
-  }
-
-  render () {
-    const {month, year} = this.state;
-    console.log(this.props.schema.title, Number(year), Number(month));
-    let months = range(1, 13).map((month) => {
-      return <option key={month} value={month}>{month}</option>;
-    });
-    months.unshift(<option key={-1} value={-1}>month</option>);
-
-    const years = range(1900, 2100).map((year) => {
-      return <option key={year} value={year}>{year}</option>;
-    });
-
-    years.unshift(<option key={-1} value={-1}>year</option>);
-
-    return <div>
-      <label className="control-label">{this.props.schema.title}</label>
-      <select className="form-control" value={Number(year)} onChange={this.onChange('year')}>
-        {years}
-      </select>
-      <select className="form-control" value={Number(month)} onChange={this.onChange('month')}>
-        {months}
-      </select>
-    </div>;
-  }
-}
-
 class ProjectForm extends React.Component {
   constructor (props) {
     super(props);
@@ -279,6 +234,11 @@ class ProjectForm extends React.Component {
       project_link: {
         'ui:placeholder': 'http://'
       },
+      location: {
+        items: {
+          marker: {'ui:field': 'marker'}
+        }
+      },
       funds: {
         items: {
           date: {
@@ -317,7 +277,10 @@ class ProjectForm extends React.Component {
       onSubmit={this.props.onSubmit}
       formData={this.state.formData}
       onChange = {this.onChange.bind(this)}
-      fields={{'short-date': DateField}}
+      fields={{
+        'short-date': DateField,
+        'marker': LocationField
+      }}
       uiSchema = {this.state.uiSchema}
     />;
   }
