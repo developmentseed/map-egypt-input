@@ -6,7 +6,7 @@ import {Link} from 'react-router';
 let config = require('../config');
 let apiRoot = config.api_root;
 
-class New extends React.Component {
+class NewProject extends React.Component {
   static contextTypes = {
     router: T.object
   }
@@ -42,4 +42,4 @@ class New extends React.Component {
   }
 }
 
-export default New;
+export default NewProject;
