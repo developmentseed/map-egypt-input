@@ -4,14 +4,9 @@ import { Link } from 'react-router';
 const config = require('../config');
 const apiRoot = config.api_root;
 
-class Index extends React.Component {
+class ProjectList extends React.Component {
   static contextTypes = {
     router: T.object
-  }
-
-  constructor (props) {
-    super(props);
-    this.logout = this.logout.bind(this);
   }
 
   componentWillMount () {
@@ -44,18 +39,12 @@ class Index extends React.Component {
           {listItems}
         </ul>
         <br />
-        <Link to="projects/new" className="btn btn-outline-primary">Add data</Link>
+        <Link to="projects/new" className="btn btn-outline-primary">Add Project</Link>
         <br />
         <br />
-        {
-          (component.props.auth.loggedIn()
-            ? <button className="btn btn-outline-primary" onClick={this.logout}>Logout</button>
-            : <div></div>
-          )
-        }
       </div>
     );
   }
 }
 
-export default Index;
+export default ProjectList;

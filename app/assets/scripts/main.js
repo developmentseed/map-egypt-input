@@ -6,10 +6,14 @@ import ReactDOM from 'react-dom';
 import {Router, Route, IndexRedirect, hashHistory} from 'react-router';
 
 import Login from './components/Login';
-import Index from './components/Index';
-import New from './components/New';
+import ProjectList from './components/ProjectList';
+import NewProject from './components/NewProject';
 import Project from './components/Project';
-import Edit from './components/Edit';
+import EditProject from './components/EditProject';
+import IndicatorList from './components/IndicatorList';
+import NewIndicator from './components/NewIndicator';
+import Indicator from './components/Indicator';
+import EditIndicator from './components/EditIndicator';
 import AuthService from './utils/AuthService';
 
 const auth = new AuthService(config.auth0_token, config.auth0_namespace);
@@ -44,11 +48,15 @@ class App extends React.Component {
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App} auth={auth}>
-      <IndexRedirect to="/projects" />
-      <Route path="projects" component={Index} />
-      <Route path="projects/new" component={New} onEnter={requireAuth} />
+      <IndexRedirect to="/login" />
+      <Route path="projects" component={ProjectList} />
+      <Route path="projects/new" component={NewProject} onEnter={requireAuth} />
       <Route path="projects/:id" component={Project} />
-      <Route path="projects/:id/edit" component={Edit} onEnter={requireAuth} />
+      <Route path="projects/:id/edit" component={EditProject} onEnter={requireAuth} />
+      <Route path="indicators" component={IndicatorList} />
+      <Route path="indicators/new" component={NewIndicator} onEnter={requireAuth} />
+      <Route path="indicators/:id" component={Indicator} />
+      <Route path="indicators/:id/edit" component={EditIndicator} onEnter={requireAuth} />
       <Route path="login" component={Login} />
       <Route path="access_token=:access_token" component={Login} />
     </Route>
