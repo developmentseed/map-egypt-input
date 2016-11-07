@@ -19,12 +19,6 @@ class ProjectList extends React.Component {
       });
   }
 
-  logout () {
-    const component = this;
-    component.props.auth.logout();
-    component.context.router.push('/projects');
-  }
-
   render () {
     const component = this;
     if (!component.state) {
