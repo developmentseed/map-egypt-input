@@ -5,13 +5,13 @@ Data Entry form for IFPRI backend. Authentication handled with Auth0.
 ## Development environment
 To set up the development environment for this website, you'll need to install the following on your system:
 
-- Node (v4.2.x) & Npm ([nvm](https://github.com/creationix/nvm) usage is advised)
+- Node (v6.x.x), Npm ([nvm](https://github.com/creationix/nvm) usage is advised), and [Yarn](https://yarnpkg.com/)
 
 > The versions mentioned are the ones used during development. It could work with newer ones.
 
 After these basic requirements are met, run the following commands in the website's folder:
 ```
-$ npm install
+$ yarn install
 ```
 
 ### Getting started
