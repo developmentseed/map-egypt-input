@@ -85,13 +85,11 @@ class Project extends React.Component {
 
       return (
         <div className="project-display">
+          <h1 className="header-page-main">Project Name</h1>
+          <Link className="btn button--primary button-section-header" to={`/projects/${component.state.id}/edit`}>Edit</Link>
           <ul>
             { rows }
           </ul>
-          <Link className="btn btn-outline-primary" to={`/projects/${component.state.id}/edit`}>Edit</Link>
-          <br />
-          <br />
-          <Link className="btn btn-outline-primary" to='/projects'>All Projects</Link>
         </div>
       );
     } else {

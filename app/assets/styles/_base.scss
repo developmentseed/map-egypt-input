@@ -18,12 +18,40 @@
 }
 
 // Scss starts here!
-.header {
-  padding: 256px 32px;
-  text-align: center;
-  font-size: 20px;
-  line-height: 1.5;
 
+a {
+  cursor: pointer;
+  color: $link-color;
+  transition: opacity 0.24s ease 0s;
+}
+
+a:visited {
+  color: $link-color;
+}
+
+a:hover {
+  opacity: 0.70;
+}
+
+a:active {
+  outline: 0;
+}
+
+.clearfix {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.header {
+  margin: 1em 0 4em;
+  padding: 0 1em;
+  @extend .clearfix;
   h1 {
     margin-bottom: 32px;
     > img {
@@ -35,13 +63,16 @@
   }
 }
 
+.section {
+  margin-bottom: 4em;
+}
+
 #site-canvas {
-  margin: 40px auto;
-  max-width: 650px;
+  margin: 0 auto;
+  max-width: 1000px;
   line-height: 1.6;
-  font-size: 18px;
-  color: #444;
-  padding: 0 10px;
+  font-size: 14px;
+  font-family: $base-font-family;
 }
 
 legend {
@@ -54,10 +85,6 @@ legend {
     float: left;
     width: 20%;
     margin-right: 5px;
-  }
-
-  .btn-now {
-    display: none;
   }
 }
 
