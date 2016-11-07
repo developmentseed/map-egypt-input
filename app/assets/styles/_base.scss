@@ -88,10 +88,10 @@ legend {
   }
 }
 
-.project-display {
+.project-display, .indicator-display {
   ul {
     label {
-      font-weight: bold; 
+      font-weight: bold;
       margin-right: 10px;
     }
     label:after {
@@ -102,5 +102,8 @@ legend {
       margin: 10px;
     }
   }
+}
 
+.form-group.large textarea {
+  min-height: 400px;
 }
