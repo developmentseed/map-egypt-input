@@ -25,7 +25,16 @@ class ProjectList extends React.Component {
       return (<div></div>);
     }
     const {list} = component.state;
-    let listItems = list.map((item) => <tr key={item.id}><td><Link to={`/projects/${item.id}`}>{item.name}</Link></td></tr>);
+    const listItems = list.map((item) => {
+      return (
+        <tr key={item.id}>
+          <td><Link to={`/projects/${item.id}`}>{item.name}</Link></td>
+          <td><Link to={`/projects/${item.id}`}>{item.name}</Link></td>
+          <td><Link to={`/projects/${item.id}`}>{item.name}</Link></td>
+          <td><Link to={`/projects/${item.id}`}>{item.name}</Link></td>
+        </tr>
+      );
+    });
 
     return (
       <div className="section">

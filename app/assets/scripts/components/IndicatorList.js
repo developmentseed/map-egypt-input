@@ -25,11 +25,20 @@ class IndicatorList extends React.Component {
       return (<div></div>);
     }
     const {list} = component.state;
-    let listItems = list.map((item) => <tr key={item.id}><td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td></tr>);
+    const listItems = list.map((item) => {
+      return (
+        <tr key={item.id}>
+          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
+          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
+          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
+          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
+        </tr>
+      );
+    });
 
     return (
       <div className="section">
-        <h2 className="header-page-main">Recently Added Projects</h2>
+        <h2 className="header-page-main">Recently Added Indicators</h2>
         <Link to='indicators/new' className="btn button--primary button-section-header button--small">Add an Indicator</Link>
         <table className="table">
           <thead>

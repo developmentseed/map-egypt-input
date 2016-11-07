@@ -3,8 +3,9 @@ var config = require('./config');
 
 import React, {PropTypes as T} from 'react';
 import ReactDOM from 'react-dom';
-import {Link, Router, Route, IndexRedirect, hashHistory} from 'react-router';
+import {Link, Router, Route, IndexRoute, hashHistory} from 'react-router';
 
+import Index from './components/Index';
 import Login from './components/Login';
 import ProjectList from './components/ProjectList';
 import NewProject from './components/NewProject';
@@ -26,7 +27,7 @@ const requireAuth = (nextState, replace) => {
 
 const alreadyAuth = (nextState, replace) => {
   if (auth.loggedIn()) {
-    replace({ pathname: '/projects' });
+    replace({ pathname: '/' });
   }
 };
 
@@ -92,7 +93,7 @@ class App extends React.Component {
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App} auth={auth}>
-      <IndexRedirect to="/login" />
+      <IndexRoute component={Index} onEnter={requireAuth} />
       <Route path="projects" component={ProjectList} onEnter={requireAuth} />
       <Route path="projects/new" component={NewProject} onEnter={requireAuth} />
       <Route path="projects/:id" component={Project} onEnter={requireAuth} />
