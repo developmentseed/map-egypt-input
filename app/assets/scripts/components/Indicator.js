@@ -6,7 +6,8 @@ const config = require('../config');
 const apiRoot = config.api_root;
 const ordering = [
   'name',
-  'description'
+  'description',
+  'data'
 ];
 
 const sortOrder = {};
@@ -40,22 +41,14 @@ class Indicator extends React.Component {
         if (sortOrder[a] > sortOrder[b]) { return 1; }
         return 0;
       }).map(function (key) {
-        if (keys[key].type === 'string') {
+        console.log(key);
+        if (key === 'data') {
+          return (<li key={key} className='large'>
+            <label>{keys[key].title}</label>
+            <textarea className='form-control' readOnly >{ indicator[key] }</textarea>
+          </li>);
+        } else if (keys[key].type === 'string') {
           return <li key={key}><label>{keys[key].title}</label>{ indicator[key] }</li>;
-        // } else if (key === 'number_served') {
-        //   return <li key={key}><label>{keys[key].title}</label>{ project[key].number_served + ' ' + project[key].number_served_unit}</li>;
-        // } else if (key === 'location') {
-        //   const locations = project[key].map((location) => <li>{location.district + ', ' + location.governorate}</li>);
-        //   return <li key={key}><label>{keys[key].title}</label><ul>{locations}</ul></li>;
-        // } else if (key === 'sds_indicator' || key === 'sdg_indicator' || key === 'category') {
-        //   const indicators = project[key].map((item) => <li>{item}</li>);
-        //   return <li key={key}><label>{keys[key].title}</label><ul>{indicators}</ul></li>;
-        // } else if (key === 'funds' && project[key].length > 0) {
-        //   const funds = project[key].map((fund) => <li>{fund.donor_name + ': ' + fund.type + ' $' + fund.amount + ' ' + fund.date}</li>);
-        //   return <li key={key}><label>{keys[key].title}</label><ul>{funds}</ul></li>;
-        // } else if (key === 'kmi' && project[key].length > 0) {
-        //   const kmis = project[key].map((kmi) => <li>{kmi.activity}<p>{kmi.description}</p><p>{kmi.kpi}</p><p>{kmi.date}</p><p>{kmi.status}</p></li>);
-        //   return <li key={key}><label>{keys[key].title}</label><ul>{kmis}</ul></li>;
         }
       });
 

@@ -80,7 +80,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "auth0-lock": "^10.4.0",
+    "auth0-js": "^7.4.0",
     "babel-plugin-transform-class-properties": "^6.16.0",
     "date-input-polyfill": "^2.11.5",
     "jwt-decode": "^2.1.0",

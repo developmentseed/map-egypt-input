@@ -25,6 +25,11 @@ const requireAuth = (nextState, replace) => {
   }
 };
 
+const parseAuthHash = (nextState, replace) => {
+  auth.parseHash(nextState.location.hash);
+  replace({ pathname: '/' });
+};
+
 const alreadyAuth = (nextState, replace) => {
   if (auth.loggedIn()) {
     replace({ pathname: '/' });
@@ -103,7 +108,7 @@ ReactDOM.render(
       <Route path="indicators/:id" component={Indicator} onEnter={requireAuth} />
       <Route path="indicators/:id/edit" component={EditIndicator} onEnter={requireAuth} />
       <Route path="login" component={Login} onEnter={alreadyAuth} />
-      <Route path="access_token=:access_token" component={Login} />
+      <Route path="access_token=:access_token" onEnter={parseAuthHash} />
     </Route>
   </Router>,
   document.querySelector('#site-canvas')
