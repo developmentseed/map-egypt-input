@@ -14,7 +14,7 @@ export default class AuthService {
 
   _doAuthentication (authResult) {
     this.setToken(authResult.idToken);
-    browserHistory.replace('/#/projects');
+    browserHistory.replace('/#');
   }
 
   request (url, method, options) {

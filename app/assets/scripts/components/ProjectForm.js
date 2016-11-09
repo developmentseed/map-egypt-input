@@ -6,7 +6,7 @@ import LocationField from './widgets/LocationWidget';
 import CurrencyField from './widgets/CurrencyWidget';
 
 export const schema = {
-  title: 'Project Form',
+  title: 'Add a Project',
   type: 'object',
   required: ['name'],
   properties: {

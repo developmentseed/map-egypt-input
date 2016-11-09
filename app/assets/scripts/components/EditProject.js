@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const config = require('../config');
 const apiRoot = config.api_root;
 
-class Edit extends React.Component {
+class EditProject extends React.Component {
   static contextTypes = {
     router: T.object
   }
@@ -74,4 +74,4 @@ class Edit extends React.Component {
   }
 }
 
-export default Edit;
+export default EditProject;

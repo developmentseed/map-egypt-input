@@ -1,58 +1,15 @@
-import React, {PropTypes as T} from 'react';
-import { Link } from 'react-router';
+import React from 'react';
 
-const config = require('../config');
-const apiRoot = config.api_root;
+import ProjectList from './ProjectList';
+import IndicatorList from './IndicatorList';
 
 class Index extends React.Component {
-  static contextTypes = {
-    router: T.object
-  }
-
-  constructor (props) {
-    super(props);
-    this.logout = this.logout.bind(this);
-  }
-
-  componentWillMount () {
-    const component = this;
-    component.props.auth.request(`${apiRoot}/projects`, 'get')
-      .then(function (resp) {
-        component.setState({
-          list: resp
-        });
-      });
-  }
-
-  logout () {
-    const component = this;
-    component.props.auth.logout();
-    component.context.router.push('/projects');
-  }
 
   render () {
-    const component = this;
-    if (!component.state) {
-      return (<div></div>);
-    }
-    const {list} = component.state;
-    let listItems = list.map((item) => <li key={item.id}><Link to={`/projects/${item.id}`}>{item.name}</Link></li>);
-
     return (
       <div>
-        <ul>
-          {listItems}
-        </ul>
-        <br />
-        <Link to="projects/new" className="btn btn-outline-primary">Add data</Link>
-        <br />
-        <br />
-        {
-          (component.props.auth.loggedIn()
-            ? <button className="btn btn-outline-primary" onClick={this.logout}>Logout</button>
-            : <div></div>
-          )
-        }
+        <ProjectList auth={this.props.auth} />
+        <IndicatorList auth={this.props.auth} />
       </div>
     );
   }
