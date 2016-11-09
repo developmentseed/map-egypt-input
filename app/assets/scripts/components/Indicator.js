@@ -41,7 +41,6 @@ class Indicator extends React.Component {
         if (sortOrder[a] > sortOrder[b]) { return 1; }
         return 0;
       }).map(function (key) {
-        console.log(key);
         if (key === 'data') {
           return (<li key={key} className='large'>
             <label>{keys[key].title}</label>
