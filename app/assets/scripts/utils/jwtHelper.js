@@ -9,6 +9,7 @@ export function getTokenExpirationDate (token) {
 
   const date = new Date(0);
   date.setUTCSeconds(decoded.exp);
+
   return date;
 }
 

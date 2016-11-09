@@ -1,20 +1,14 @@
-import Auth0Lock from 'auth0-lock';
-import { browserHistory } from 'react-router';
 import { isTokenExpired } from './jwtHelper';
 
 import reqwest from 'reqwest';
+import Auth0 from 'auth0-js';
 
 export default class AuthService {
-  constructor (clientId, domain) {
-    this.lock = new Auth0Lock(clientId, domain, {});
-    this.lock.on('authenticated', this._doAuthentication.bind(this));
+  constructor (clientID, domain) {
+    this.auth0 = new Auth0({ clientID, domain, responseType: 'token' });
 
     this.login = this.login.bind(this);
-  }
-
-  _doAuthentication (authResult) {
-    this.setToken(authResult.idToken);
-    browserHistory.replace('/#');
+    this.signup = this.signup.bind(this);
   }
 
   request (url, method, options) {
@@ -34,8 +28,19 @@ export default class AuthService {
     return reqwest(reqParams);
   }
 
-  login () {
-    this.lock.show();
+  login (params, onError) {
+    this.auth0.login(params, onError);
+  }
+
+  signup (params, onError) {
+    this.auth0.signup(params, onError);
+  }
+
+  parseHash (hash) {
+    const authResult = this.auth0.parseHash(hash);
+    if (authResult && authResult.idToken) {
+      this.setToken(authResult.idToken);
+    }
   }
 
   loggedIn () {
@@ -44,16 +49,14 @@ export default class AuthService {
   }
 
   setToken (idToken) {
-    // Set auth token in local storage
     localStorage.setItem('id_token', idToken);
   }
 
-  getToken (idToken) {
+  getToken () {
     return localStorage.getItem('id_token');
   }
 
   logout () {
-    // Clear the session storage
     localStorage.removeItem('id_token');
   }
 }
