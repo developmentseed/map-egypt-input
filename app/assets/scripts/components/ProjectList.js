@@ -1,6 +1,6 @@
 import React, {PropTypes as T} from 'react';
 import { Link } from 'react-router';
-import moment from 'moment'
+import moment from 'moment';
 
 const config = require('../config');
 const apiRoot = config.api_root;
