@@ -30,6 +30,7 @@ class Login extends React.Component {
       <div className='login'>
         <h2>Log in to continue</h2>
         <form onSubmit={this.handleSubmit.bind(this)}>
+          <span className='message-error'>{this.state.message}</span>
           <div className='form__group'>
             <label htmlFor='email'>E-mail</label>
             <input className='form__control' type='email' ref='email' id='email' placeholder="yours@example.com" required />
@@ -43,7 +44,6 @@ class Login extends React.Component {
           <div>
             <button className="btn button--primary">Login</button>
           </div>
-          {this.state.message}
         </form>
       </div>
     );
