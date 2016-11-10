@@ -1,11 +1,12 @@
 'use strict';
 var config = require('./config');
 
-import React, {PropTypes as T} from 'react';
+import React, { PropTypes as T } from 'react';
 import ReactDOM from 'react-dom';
-import {Link, Router, Route, IndexRoute, hashHistory} from 'react-router';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import Index from './components/Index';
+import Header from './components/Header';
 import Login from './components/Login';
 import ProjectList from './components/ProjectList';
 import NewProject from './components/NewProject';
@@ -67,30 +68,10 @@ class App extends React.Component {
     }
     return (
       <div>
-      <header className="header">
-        <div className="wrapper-content">
-          <nav>
-            <ul>
-              <li><Link to='/'> MAP Egypt Dashboard</Link></li>
-              <li><Link to='projects' className="browse-menu__item link--deco">Projects</Link></li>
-              <li><Link to='indicators' className="browse-menu__item link--deco">Indicators</Link></li>
-            </ul>
-          </nav>
-          <div className="nav-log">
-            <ul>
-              <li><a href="#" onClick={component.state.auth.login.bind(this)}>Log In</a></li>
-              <li>
-                {
-                  (component.props.route.auth.loggedIn()
-                    ? <button className="btn button--primary button--small" onClick={component.logout}>Logout</button>
-                    : <div></div>
-                  )
-                }
-              </li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      {(component.props.route.auth.loggedIn()
+        ? <Header logout={component.logout}/>
+        : ''
+      )}
         {children}
       </div>
     );

@@ -1,5 +1,6 @@
 import React, {PropTypes as T} from 'react';
 import { Link } from 'react-router';
+import moment from 'moment';
 
 const config = require('../config');
 const apiRoot = config.api_root;
@@ -28,25 +29,27 @@ class IndicatorList extends React.Component {
     const listItems = list.map((item) => {
       return (
         <tr key={item.id}>
-          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
-          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
-          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
-          <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
+        <td><Link to={`/indicators/${item.id}`}>{item.name}</Link></td>
+        <td>{moment(item.updated_at).format('YYYY-MM-DD')}</td>
+        <td>{moment(item.created_at).format('YYYY-MM-DD')}</td>
         </tr>
       );
+    }).filter((item, i) => {
+      // filter out items if we have a limit
+      return component.props.limit ? i < component.props.limit : true;
     });
 
     return (
       <div className="section">
         <h2 className="header-page-main">Recently Added Indicators</h2>
         <Link to='indicators/new' className="btn button--primary button-section-header button--small">Add an Indicator</Link>
+        <Link to='indicators' className="btn button--primary button-section-header button--small">View All</Link>
         <table className="table">
           <thead>
             <tr>
-              <th>Status</th>
               <th>Name</th>
-              <th>Category</th>
-              <th>Location</th>
+              <th>Updated</th>
+              <th>Created</th>
             </tr>
           </thead>
           <tbody>
