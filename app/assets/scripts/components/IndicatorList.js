@@ -43,6 +43,7 @@ class IndicatorList extends React.Component {
       <div className="section">
         <h2 className="header-page-main">Recently Added Indicators</h2>
         <Link to='indicators/new' className="btn button--primary button-section-header button--small">Add an Indicator</Link>
+        <Link to='indicators' className="btn button--primary button-section-header button--small">View All</Link>
         <table className="table">
           <thead>
             <tr>

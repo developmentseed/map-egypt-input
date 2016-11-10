@@ -43,6 +43,7 @@ class ProjectList extends React.Component {
       <div className="section">
         <h2 className="header-page-main">Recently Added Projects</h2>
         <Link to='projects/new' className="btn button--primary button-section-header button--small">Add a Project</Link>
+        <Link to='projects' className="btn button--primary button-section-header button--small">View All</Link>
         <table className="table">
           <thead>
             <tr>
