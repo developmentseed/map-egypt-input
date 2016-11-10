@@ -34,6 +34,9 @@ class ProjectList extends React.Component {
           <td><Link to={`/projects/${item.id}`}>{item.name}</Link></td>
         </tr>
       );
+    }).filter((item, i) => {
+      // filter out items if we have a limit
+      return component.props.limit ? i < component.props.limit : true;
     });
 
     return (
