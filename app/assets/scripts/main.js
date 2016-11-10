@@ -68,25 +68,27 @@ class App extends React.Component {
     return (
       <div>
       <header className="header">
-        <nav>
-          <ul>
-            <li><Link to='/'> MAP Egypt Dashboard</Link></li>
-            <li><Link to='projects' className="browse-menu__item link--deco">Projects</Link></li>
-            <li><Link to='indicators' className="browse-menu__item link--deco">Indicators</Link></li>
-          </ul>
-        </nav>
-        <div className="nav-log">
-          <ul>
-            <li><a href="#" onClick={component.state.auth.login.bind(this)}>Log In</a></li>
-            <li>
-              {
-                (component.props.route.auth.loggedIn()
-                  ? <button className="btn button--primary button--small" onClick={component.logout}>Logout</button>
-                  : <div></div>
-                )
-              }
-            </li>
-          </ul>
+        <div className="wrapper-content">
+          <nav>
+            <ul>
+              <li><Link to='/'> MAP Egypt Dashboard</Link></li>
+              <li><Link to='projects' className="browse-menu__item link--deco">Projects</Link></li>
+              <li><Link to='indicators' className="browse-menu__item link--deco">Indicators</Link></li>
+            </ul>
+          </nav>
+          <div className="nav-log">
+            <ul>
+              <li><a href="#" onClick={component.state.auth.login.bind(this)}>Log In</a></li>
+              <li>
+                {
+                  (component.props.route.auth.loggedIn()
+                    ? <button className="btn button--primary button--small" onClick={component.logout}>Logout</button>
+                    : <div></div>
+                  )
+                }
+              </li>
+            </ul>
+          </div>
         </div>
       </header>
         {children}

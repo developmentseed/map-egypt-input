@@ -63,11 +63,8 @@ class EditProject extends React.Component {
     if (component.state && component.state.project) {
       return <div>
         <ProjectForm onSubmit={component.handleSubmit} formData={component.state.project.data}/>
-        <br />
-        <button className="btn btn-danger" onClick={component.handleDelete}>Delete</button>
-        <br />
-        <br />
-        <Link className="btn btn-outline-danger" to={`/projects/${component.state.id}`}>Cancel</Link>
+        <button className="btn" onClick={component.handleDelete}>Delete</button>
+        <Link className="btn" to={`/projects/${component.state.id}`}>Cancel</Link>
       </div>;
     }
     return <div></div>;

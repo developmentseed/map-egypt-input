@@ -33,10 +33,10 @@ class NewProject extends React.Component {
   render () {
     const component = this;
     return (
-      <div>
-       <ProjectForm onSubmit={component.handleSubmit} />
-       <br />
-       <Link className="btn btn-outline-danger" to="/">Cancel</Link>
+      <div className="wrapper-content width-medium">
+        <h1>Add a New Project</h1>
+        <ProjectForm onSubmit={component.handleSubmit} />
+        <Link className="btn" to="/">Cancel</Link>
      </div>
     );
   }

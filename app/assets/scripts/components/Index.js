@@ -7,7 +7,7 @@ class Index extends React.Component {
 
   render () {
     return (
-      <div>
+      <div className="wrapper-content">
         <ProjectList auth={this.props.auth} />
         <IndicatorList auth={this.props.auth} />
       </div>

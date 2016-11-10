@@ -1,16 +1,15 @@
 import React from 'react';
 import Form from 'react-jsonschema-form';
 import {cloneDeep} from 'lodash';
-import DateField from './widgets/DateWidget';
+import DateFieldFactory from './widgets/DateWidget';
 import LocationField from './widgets/LocationWidget';
 import CurrencyField from './widgets/CurrencyWidget';
 
 export const schema = {
-  title: 'Add a Project',
   type: 'object',
   required: ['name'],
   properties: {
-    name: {type: 'string', title: 'Project Name'},
+    name: {type: 'string', title: 'Project Name', 'description': 'Please make sure this is a unique name'},
     description: {
       title: 'Objective',
       type: 'string'
@@ -19,6 +18,7 @@ export const schema = {
       title: 'Components',
       type: 'array',
       items: {
+        title: 'Component',
         type: 'string'
       }
     },
@@ -36,22 +36,24 @@ export const schema = {
     planned_end_date: {type: 'string', title: 'Planned End Date'},
     actual_end_date: {type: 'string', title: 'Actual End Date'},
     local_manager: {type: 'string', title: 'Local Project Manager'},
-    responsible_ministry: {type: 'string', title: 'Responsible Ministry', enum: ['Ministry 1', 'Ministry 2', 'Ministry 3']},
+    responsible_ministry: {type: 'string', title: 'Responsible Ministry', enum: ['Select a Ministry', 'Ministry 1', 'Ministry 2', 'Ministry 3']},
     project_link: {title: 'Project Link', type: 'string', format: 'uri'},
     number_served: {
       type: 'object',
       title: 'Number of Beneficiaries',
       properties: {
-        number_served: {type: 'number', title: 'Amount'},
-        number_served_unit: {type: 'string', title: 'Unit'}
+        number_served: {type: 'number', title: 'Amount', 'description': '2000'},
+        number_served_unit: {type: 'string', title: 'Unit', 'description': 'e.g. Households Served'}
       }
     },
     sds_indicator: {
       title: 'SDS Goals',
       type: 'array',
       items: {
+        title: 'SDS Goal',
         type: 'string',
         enum: [
+          'Select an SDG goal',
           'SDS Goal 1',
           'SDS Goal 2',
           'SDS Goal 3'
@@ -62,8 +64,10 @@ export const schema = {
       title: 'SDG Goals',
       type: 'array',
       items: {
+        title: 'SDG Goal',
         type: 'string',
         enum: [
+          'Select an SDG goal',
           'SDG Goal 1',
           'SDG Goal 2',
           'SDG Goal 3'
@@ -74,8 +78,10 @@ export const schema = {
       type: 'array',
       title: 'Sub-sectors',
       items: {
+        title: 'Sub-sector',
         type: 'string',
         enum: [
+          'Select a sub-sector',
           'Agriculture Extension & Research',
           'Agro-industry, Marketing & Trade',
           'Crops',
@@ -96,6 +102,7 @@ export const schema = {
             title: 'Governorate',
             type: 'string',
             enum: [
+              'Select a Governorate',
               'governorate 1',
               'governorate 2',
               'governorate 3'
@@ -105,6 +112,7 @@ export const schema = {
             title: 'District',
             type: 'string',
             enum: [
+              'Select a District',
               'district 1',
               'district 2',
               'district 3'
@@ -131,7 +139,6 @@ export const schema = {
         properties: {
           fund: {
             type: 'object',
-            title: 'Fund',
             properties: {
               currency: {type: 'string'},
               rate: {type: 'number'},
@@ -155,7 +162,6 @@ export const schema = {
         properties: {
           fund: {
             type: 'object',
-            title: 'Fund',
             properties: {
               currenct: {type: 'string'},
               rate: {type: 'number'},
@@ -193,11 +199,19 @@ export const schema = {
           status: {
             type: 'string',
             title: 'Status',
-            enum: ['Partially Implemented', 'Implemented', 'Not Implemented']
+            enum: ['Select an status', 'Partially Implemented', 'Implemented', 'Not Implemented']
           },
           description: {
             type: 'string',
             title: 'Implementation Description'
+          },
+          baseline: {
+            type: 'string',
+            title: 'Baseline'
+          },
+          current: {
+            type: 'string',
+            title: 'Current'
           },
           target: {
             type: 'string',
@@ -205,11 +219,16 @@ export const schema = {
           },
           kpi: {
             type: 'string',
-            title: 'KPIs (selected)'
+            title: 'KPI'
           },
           date: {
             type: 'string',
             title: 'Monitoring Date'
+          },
+          reportLink: {
+            type: 'string',
+            title: 'Report Link',
+            format: 'uri'
           }
         }
       }
@@ -225,8 +244,17 @@ class ProjectForm extends React.Component {
     this.state.schema = schema;
     this.state.formData = this.props.formData;
     this.state.uiSchema = {
-      name: {
-        'ui:placeholder': 'Unique name'
+      components: {
+        classNames: 'multiform-group',
+        items: {
+          classNames: 'multiform-group_item'
+        }
+      },
+      category: {
+        classNames: 'multiform-group',
+        items: {
+          classNames: 'multiform-group_item'
+        }
       },
       description: {
         'ui:widget': 'textarea'
@@ -238,12 +266,7 @@ class ProjectForm extends React.Component {
         'ui:widget': 'textarea'
       },
       number_served: {
-        number_served: {
-          'ui:placeholder': '20000'
-        },
-        number_served_unit: {
-          'ui:placeholder': 'Households'
-        }
+        classNames: 'field-half'
       },
       percent_complete: {
         'ui:widget': 'range'
@@ -264,28 +287,47 @@ class ProjectForm extends React.Component {
         'ui:placeholder': 'http://'
       },
       location: {
+        classNames: 'form-block multiform-group',
         items: {
           marker: {'ui:field': 'marker'}
         }
       },
+      sds_indicator: {
+        classNames: 'multiform-group',
+        items: {
+          classNames: 'multiform-group_item'
+        }
+      },
+      sdg_indicator: {
+        classNames: 'multiform-group',
+        items: {
+          classNames: 'multiform-group_item'
+        }
+      },
       budget: {
+        classNames: 'form-block columns-small multiform-group',
         items: {
           fund: {'ui:field': 'currency'}
         }
       },
       disbursed: {
+        classNames: 'form-block columns-small multiform-group',
         items: {
           fund: {'ui:field': 'currency'},
-          date: {'ui:field': 'short-date'}
+          date: {'ui:field': 'fund-date'}
         }
       },
       kmi: {
+        classNames: 'form-block multiform-group',
         items: {
           date: {
-            'ui:field': 'short-date'
+            'ui:field': 'monitoring-date'
           },
           description: {
             'ui:widget': 'textarea'
+          },
+          reportLink: {
+            'ui:placeholder': 'http://'
           }
         }
       }
@@ -311,7 +353,9 @@ class ProjectForm extends React.Component {
       formData={this.state.formData}
       onChange = {this.onChange.bind(this)}
       fields={{
-        'short-date': DateField,
+        'short-date': DateFieldFactory('Year', 'Month'),
+        'fund-date': DateFieldFactory('Year Disbursed', 'Month Disbursed'),
+        'monitoring-date': DateFieldFactory('Monitoring Date - Year', 'Monitoring Date - Month'),
         'marker': LocationField,
         'currency': CurrencyField
       }}
