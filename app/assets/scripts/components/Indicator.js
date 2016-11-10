@@ -44,7 +44,7 @@ class Indicator extends React.Component {
         if (key === 'data') {
           return (<li key={key} className='large'>
             <label>{keys[key].title}</label>
-            <textarea className='form-control' readOnly >{ indicator[key] }</textarea>
+            <textarea className='form-control' readOnly value={indicator[key]}></textarea>
           </li>);
         } else if (keys[key].type === 'string') {
           return <li key={key}><label>{keys[key].title}</label>{ indicator[key] }</li>;
