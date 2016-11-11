@@ -17,12 +17,19 @@ class Login extends React.Component {
 
     this.props.auth.login({
       connection: 'Username-Password-Authentication',
+      scope: 'openid roles',
       responseType: 'token',
       email: ReactDOM.findDOMNode(this.refs.email).value,
       password: ReactDOM.findDOMNode(this.refs.password).value
     }, function (err) {
       if (err) component.setState({ message: err.message });
     });
+  }
+
+  componentWillMount () {
+    this.props.auth.loggedInNotEditor()
+    ? this.setState({ message: 'Not authorized to access the admin panel' })
+    : true;
   }
 
   render () {
