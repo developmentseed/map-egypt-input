@@ -22,3 +22,8 @@ export function isTokenExpired (token) {
 
   return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
 }
+
+export function isEditor (token) {
+  const decoded = decode(token);
+  return decoded.roles.indexOf('edit') > -1;
+}
