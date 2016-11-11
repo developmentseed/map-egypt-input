@@ -27,9 +27,9 @@ class Login extends React.Component {
   }
 
   componentWillMount () {
-    this.props.auth.loggedInNotEditor()
-    ? this.setState({ message: 'Not authorized to access the admin panel' })
-    : true;
+    if (this.props.auth.loggedInNotEditor()) {
+      this.setState({ message: 'Not authorized to access the admin panel' });
+    }
   }
 
   render () {
